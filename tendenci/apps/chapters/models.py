@@ -48,7 +48,7 @@ from tendenci.apps.base.utils import fieldify
 from tendenci.apps.base.utils import validate_email
 from tendenci.apps.notifications import models as notification
 from tendenci.apps.base.models import BaseImport, BaseImportData
-from tendenci.apps.base.utils import correct_filename, get_us_state_name
+from tendenci.apps.base.utils import correct_filename, get_state_or_province_name
 from tendenci.apps.event_logs.models import EventLog
 from tendenci.libs.utils import python_executable
 
@@ -333,7 +333,7 @@ class CoordinatingAgency(models.Model):
     def _auto_generate_group(self):
         if not self.group:
             if self.state:
-                state_name = get_us_state_name(self.state)
+                state_name = get_state_or_province_name(self.state)
                 name = f'State {state_name}'
                 kwargs = {
                  'description': "Auto-generated with the chapter coordinating agency.", 

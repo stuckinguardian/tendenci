@@ -12,7 +12,8 @@ import simplejson
 from django.core import exceptions
 from django_countries import countries as COUNTRIES
 from localflavor.us.us_states import STATE_CHOICES, US_STATES
-from localflavor.ca.ca_provinces import PROVINCE_CHOICES
+from localflavor.id_.id_choices import PROVINCE_CHOICES as ID_PROVINCE_CHOICES
+from localflavor.ca.ca_provinces import PROVINCE_CHOICES as CA_PROVINCE_CHOICES
 
 from tendenci.apps.base import forms
 from tendenci.apps.base.utils import custom_json_dumper
@@ -151,8 +152,8 @@ class StateSelectField(fields.ChoiceField):
             if get_setting('site', 'global', 'usstatesonly'):
                 choices = (('',empty_label),) + tuple((state, state_f.title()) for state, state_f in US_STATES)
             else:
-                choices = (('',empty_label),) + tuple((state, state_f.title()) for state, state_f in STATE_CHOICES) \
-                    + tuple((prov, prov_f.title()) for prov, prov_f in PROVINCE_CHOICES)
+                choices = (('',empty_label),) + tuple((idprov, idprov_f.title()) for idprov, idprov_f in ID_PROVINCE_CHOICES)
+                    
             choices = sorted(choices)
             # add non-us
             choices = choices + [('Non-US', _('Non-US')),]

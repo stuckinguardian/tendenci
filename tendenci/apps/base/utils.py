@@ -25,6 +25,8 @@ from pdfminer.layout import LAParams, LTTextBox, LTTextLine
 from PIL import Image as pil
 from PIL import ImageFile
 from localflavor.us.us_states import US_STATES
+from localflavor.id_.id_choices import PROVINCE_CHOICES as ID_PROVINCE_CHOICES
+
 
 from django.conf import settings
 from django.utils import translation
@@ -79,12 +81,15 @@ ORIENTATION_EXIF_TAG_KEY = 274
 def is_ajax(request):
     return request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
 
-def get_us_state_name(state_abbr):
+def get_state_or_province_name(abbreviation):
     """
-    Given a state abbreiation, 
-    returns a state name
+    Given an abbreviation, returns the full name of the US state or Indonesian province.
+    Falls back to the abbreviation if not found.
     """
-    return dict(US_STATES).get(state_abbr, state_abbr)
+    state_map = dict(US_STATES)
+    id_map = dict(ID_PROVINCE_CHOICES)
+
+    return state_map.get(abbreviation) or id_map.get(abbreviation) or abbreviation
 
 def get_next_url(request, method='GET'):
     """

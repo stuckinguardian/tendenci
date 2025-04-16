@@ -15,7 +15,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django_countries import countries as COUNTRIES
 
 from localflavor.us.us_states import STATE_CHOICES, US_STATES
-from localflavor.ca.ca_provinces import PROVINCE_CHOICES
+from localflavor.id_.id_choices import PROVINCE_CHOICES as ID_PROVINCE_CHOICES
+from localflavor.ca.ca_provinces import PROVINCE_CHOICES as CA_PROVINCE_CHOICES
 
 from tendenci.apps.forms_builder.forms.settings import FIELD_MAX_LENGTH, LABEL_MAX_LENGTH
 from tendenci.apps.forms_builder.forms.managers import FormManager
@@ -304,7 +305,9 @@ class Field(OrderingBaseModel):
                 choices = (('', '-----------'),) + tuple((state, state_f.title()) for state, state_f in US_STATES)
             else:
                 choices = (('', '-----------'),) + tuple((state, state_f.title()) for state, state_f in STATE_CHOICES) \
-                                    +tuple((prov, prov_f.title()) for prov, prov_f in PROVINCE_CHOICES)
+                                    +tuple((prov, prov_f.title()) for prov, prov_f in CA_PROVINCE_CHOICES) \
+                                    +tuple((idprov, idprov_f.title()) for idprov, idprov_f in ID_PROVINCE_CHOICES)
+                
                 choices = sorted(choices)
         elif self.field_function == 'Recipients':
             choices = [(label + ':' + val, label) for label, val in (i.split(":") for i in self.choices.split(","))]
